@@ -1,0 +1,37 @@
+@import url(//fonts.googleapis.com/css?family=Lato:300,400,700,900);
+@import url('//fonts.googleapis.com/css2?family=Ubuntu&family=Oxygen&display=swap');
+@import url('//fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+html, body
+{
+	font-family: "Open Sans", sans;
+	color: #eee;
+	text-shadow: 0px 0px 1px #000;
+	min-height: 100vh;
+}
+
+a
+{
+	color: #03afff;
+	transition: color 180ms;
+}
+
+a:hover:not(.btn)
+{
+	color: #0adfff;
+}
+
+.btn
+{
+	font-family: "Ubuntu", sans;
+	text-shadow: none;
+}
+
+[role="navigation"]
+{
+	font-family: 'Lato', sans;
+}
+
+.container, .container-alt
+{
+	transition: width 0.25s;
+}

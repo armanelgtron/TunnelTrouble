@@ -1,0 +1,15 @@
+.ui-sortable-table .ui-sortable-th{
+	cursor:pointer;
+}
+.ui-sortable-table .ui-sortable-th.asc:after{
+	content:" \25B2";
+	
+	font-size: 90%;
+	color: #aaa;
+}
+.ui-sortable-table .ui-sortable-th.desc:after{
+	content:" \25BC";
+	
+	font-size: 90%;
+	color: #aaa;
+}
