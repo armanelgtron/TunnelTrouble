@@ -54,7 +54,7 @@ $x=0;foreach((empty($_GET)?$maps:$_maps) as $map)
 			$ta="";
 		}
 	}
-	if($mapsdata["maps"] < $x) echo " info";
+	if( count($maps) < $x ) echo " info";
 	echo "' >";
 	if(in_array($map[0],$ratingsls))
 	{

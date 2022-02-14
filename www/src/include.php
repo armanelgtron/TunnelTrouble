@@ -23,11 +23,11 @@ function addIncludes($ctx, $b="", $e="\n")
 			}
 		}
 		
-		$pathinfo = (object)pathinfo($inc[0]);
+		$pathinfo = (object)(isset($inc[0])?pathinfo($inc[0]):[]);
 		
 		$format = "<b>INCLUDE ERROR</b>: %s";
 		$inline_format = "%s";
-		switch( isset($inc["ext"]) ? $inc["ext"] : $pathinfo->extension )
+		switch( isset($inc["ext"]) ? $inc["ext"] : @$pathinfo->extension )
 		{
 			case "css":
 				$format = '<link type="text/css" rel="stylesheet" href="%s" />';

@@ -47,6 +47,7 @@ class PlayerStats
 			{
 				$rankerdiv+=$x;$x=0;foreach($ranks as $rank)
 				{
+					if( $rank == "" ) continue;
 					$split = explode(" ",$rank);
 					if( $split[1] == -1 ) continue;
 					$x++;

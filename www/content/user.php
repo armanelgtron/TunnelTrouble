@@ -12,6 +12,7 @@ foreach([
 	"played", "name",
 	"ranker",
 	"notraced", "notranks",
+	"top1", "top2", "top3",
 ] as $i)
 {
 	${$i} = $p->$i;
@@ -62,14 +63,17 @@ if($p->played)
 {
 $e = "";
 echo '<div class="container" role="main">';
-echo "<h3>{$name}{$e}</h3><b># of maps with 1st place:</b> $top1<br>";
+echo "<h3>{$name}{$e}</h3>";
+echo "<b># of maps with 1st place:</b> $top1<br>";
 foreach(getLadder() as $ldpos=>$ld)
 {
 	$c = strpos($ld,$player);
 	if($c == (strpos($ld,' ')+1) && strlen($ld)-$c == strlen($player)) break;
 }
 echo "<b>Position on Ladder:</b> ".($ldpos+1)." ($ld)<br>";
-echo "<b>Average Rank (of $played maps):</b> ".round($ranker/$played)." <br><b>Average Rank (of all maps):</b> ".round(($ranker+$notranks)/count($file))."<br><b>Show maps with ranks:</b> ";
+echo "<b>Average Rank (of $played maps):</b> ".round($ranker/$played)." <br />";
+echo "<b>Average Rank (of all maps):</b> ".round(($ranker+$notranks)/count($maps))."<br />";
+echo "<b>Show maps with ranks:</b> ";
 print("<div class=\"btn-group\" role=\"group\" aria-label=\"...\"><button type=\"button\" class=\"btn btn-default tooltipped\" data-toggle=\"tooltip\" data-position=\"bottom\" data-tooltip=\"".count($notraced)." unfinished maps\" onclick=\"showranks(-1)\">None</button><button type=\"button\" class=\"btn btn-default tooltipped\" onclick=\"showranks(0)\" data-toggle=\"tooltip\" data-position=\"bottom\" data-tooltip=\"$played maps with this rank\">All</button></div>\n");
 print("<div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n");
 foreach($myranks as $rank=>$count)
@@ -81,9 +85,10 @@ echo "<br></div><div style='margin: 3px 0;' class=\"row center-block\">";
 foreach($playerrec as $map=>$rec)
 {
 (function($map, $rec) use($rankfiles) {
-	//$data = $_maps[array_search($map,array_column($_maps,0))];
+	global $_maps;
+	$data = $_maps[array_search($map,array_column($_maps,0))];
 	echo '<div class="col s12 m6 ranks" name="rank_'.($rec+1).'"><div class="panel panel-default" style="display:inline"><div class="panel-heading">'." <a class='modal-trigger' data-toggle=\"modal\" data-target=\"previewmap\" onclick=\"setpreview('{$data[0]}','{$data[4]}','{$data[1]}')\" style=\"cursor:pointer\">{$map}</a> <a href='?ranks={$map}' class='text-success'>(See all ranks)</a></div><table class=\"table table-bordered\"><thead><tr><th>#</th> <th>User</th> <th>Time</th> <th>Average Speed</th></tr></thead><tbody>";
-	$file = current(array_filter($rankfiles, function($o) use($map) { return (bool)strstr($o, $map); }));
+	$file = getMapRankPath($map);
 	$themap = explode("\n",file_get_contents($file));
 	$x=-2;while($x<1||($rec==0&&$x<2)) 
 	{

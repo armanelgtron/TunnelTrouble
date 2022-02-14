@@ -10,6 +10,7 @@ if(!include_once("./config.php"))
 }
 
 $ratings = [];
+$currmap = $currrot = -1;
 
 $saveto = SAVE_TO;
 $race_scores = RACESCORES_PATH;
