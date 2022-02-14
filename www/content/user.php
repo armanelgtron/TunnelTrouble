@@ -112,4 +112,4 @@ if($c == "") print("No maps unfinished.");
 
 echo '</div>';
 ?>
-<? } else { echo '<div class="container" role="main"><h2>This user has not ranked!</h2></div>'; } ?>
+<?php } else { echo '<div class="container" role="main"><h2>This user has not ranked!</h2></div>'; } ?>

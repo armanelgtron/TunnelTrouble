@@ -4,7 +4,6 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <?php
-	ini_set("short_open_tag", true);
 	session_start();
 	if(@$_SESSION['tt.logged_in'] !== $_SERVER['REMOTE_ADDR']) { unset($_SESSION['tt.logged_in']); }
 
@@ -29,7 +28,7 @@
 	<meta property="og:description"   content="Rankings for tunnel trouble" />
 	<meta property="og:image"         content="http://durf.cf/favicon.ico" />
 	
-<?	addIncludes("head", "\t"); ?>
+<?php addIncludes("head", "\t"); ?>
 </head>
 
 <body class="blue-grey darken-4">
@@ -88,7 +87,7 @@
 		</div>
 	</div>
 
-<? addIncludes("end"); ?>
+<?php addIncludes("end"); ?>
 </body>
 
 </html>
