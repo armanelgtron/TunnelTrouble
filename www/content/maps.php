@@ -16,7 +16,13 @@
 			<table data-toggle="table" data-sort-name="rotnum" data-sort-order="asc" class="table table-no-bordered ui-sortable-table" style="border">
 				<thead>
 					<tr>
-						<th data-field="rotnum" data-sortable="true">#</th> <th></th> <th data-field="author" data-sortable="true">Author</th> <th data-field="name" data-sortable="true">Map Name</th> <th data-field="ratings" data-sortable="true">Ratings</th> <th>Record</th>
+						<th data-field="rotnum" data-sortable="true">#</th>
+						<th></th>
+						<th data-field="author" data-sortable="true">Author</th>
+						<th data-field="name" data-sortable="true">Map Name</th>
+						<!--<th data-field="ratings" data-sortable="true">Ratings</th>-->
+						<th data-field="completed" data-sortable="true">Completed</th>
+						<th>Record</th>
 					</tr>
 				</thead>
 				<tbody id="maps">
@@ -78,7 +84,8 @@ $x=0;foreach((empty($_GET)?$maps:$_maps) as $map)
 		$rated = $orated = 0;
 	}
 	$ranks = explode("\n",file_get_contents(getMapRankPath($map[0])));
-	$ranker = explode(" ",($ranks[0]))[0];
+	$rk = $c = 0; foreach($ranks as $r) { if($r=="") continue; if( (explode(" ",$r))[1] != -1 ) { ++$c; } ++$rk; }
+	$ranker = ($c==0)?(""):(explode(" ",($ranks[0]))[0]);
 	echo "\n\t\t\t\t\t\t<td>$x</td> <td>$ta</td> <td>";
 	
 	if(isset($mapmakers[$map[4]]))
@@ -86,7 +93,12 @@ $x=0;foreach((empty($_GET)?$maps:$_maps) as $map)
 		print("<a href='?user=".urlencode($mapmakers[$map[4]])."' class='text-danger'>{$map[4]}</span></td>");
 	}
 	else print("<span class='text-danger'>{$map[4]}</span></td>");
-	echo " <td><a class='text-warning' data-toggle=\"modal\" data-target=\"#previewmap\" onclick=\"setpreview('{$map[0]}','{$map[4]}','{$map[1]}')\" style=\"cursor:pointer\">{$map[0]}</a></td> <td><span style='display:none;'>$orated</span><a href=\"?rate={$map[0]}\" class='text-info'>$rating</a> <td><a href=\"./?user=".urlencode($ranker)."\">$ranker</a> <a href='?ranks={$map[0]}' class='text-success'>(See all ranks)</a></td></td>\n\t\t\t\t\t</tr>\n"; 
+	print("<td><a class='text-warning' data-toggle=\"modal\" data-target=\"#previewmap\" onclick=\"setpreview('{$map[0]}','{$map[4]}','{$map[1]}')\" style=\"cursor:pointer\">{$map[0]}</a></td>");
+	//print("<td><span style='display:none;'>$orated</span><a href=\"?rate={$map[0]}\" class='text-info'>$rating</a></td>");
+	print("<td>".floor(($c/$rk)*100)."%</td>");
+	print("<td><a href=\"./?user=".urlencode($ranker)."\">$ranker</a> <a href='?ranks={$map[0]}' class='text-success'>(See all ranks)</a></td>");
+	
+	echo "\n\t\t\t\t\t</tr>\n"; 
 }
 ?>
 				</tbody>

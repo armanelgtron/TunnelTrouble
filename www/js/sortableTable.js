@@ -71,7 +71,7 @@
       
       var comp_a = $('td:eq(' + columIndex + ')', a).text();
       var comp_b = $('td:eq(' + columIndex + ')', b).text();
-      var num_a = Number(comp_a), num_b = Number(comp_b);
+      var num_a = parseFloat(comp_a), num_b = parseFloat(comp_b);
       if(!isNaN(num_a) && !isNaN(num_b))
       {
         return (num_a > num_b) ? 1 : -1;
