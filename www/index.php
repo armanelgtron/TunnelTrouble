@@ -36,13 +36,22 @@
 	<nav class="grey darken-4" role="navigation">
 		<div class="nav-wrapper container">
 			<a id="logo-container" href="/tt/" class="brand-logo left">Tunnel Trouble</a>
-			<span class="right">
-				<!--
-				<a class="btn grey darken-1" href="/">Home</a>&nbsp;
-				-->
-				<a class="btn light-blue accent-4" href="./">Main</a>&nbsp;
-				<a class="btn light-blue accent-4" href="./?ladder">Ladder</a>&nbsp;
-			</span>
+			<ul class="nav-mobile right">
+<?php
+				require_once("./pages.php");
+				if(file_exists("./pages_usr.php")) include("./pages_usr.php");
+				foreach($pages_nav as $page)
+				{
+					print("\t\t\t\t");
+					$class = "";
+					if( isset($page["active"]) && ($page["active"])() )
+					{
+						$class .= "active ";
+					}
+					print('<li class="tab col s2"><a class="waves-effect '.$class.'" href="'.$page[1].'">'.$page[0].'</a></li>'."\n");
+				}
+?>
+			</ul>
 		</div>
 	</nav>
 	
