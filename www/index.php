@@ -48,7 +48,7 @@
 					{
 						$class .= "active ";
 					}
-					print('<li class="tab col s2"><a class="waves-effect '.$class.'" href="'.$page[1].'">'.$page[0].'</a></li>'."\n");
+					print('<li class="'.$class.'"><a class="waves-effect" href="'.$page[1].'">'.$page[0].'</a></li>'."\n");
 				}
 ?>
 			</ul>
