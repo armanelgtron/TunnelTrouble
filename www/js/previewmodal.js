@@ -25,7 +25,7 @@ function setpreview(map,author,mapfile)
 function openpreview(map, author, mapfile)
 {
 	setpreview(map, author, mapfile);
-	$("#previewmap").modal().open();
+	$("#previewmap").modal("open");
 }
 
 function previewgrid(checked)
