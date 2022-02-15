@@ -93,7 +93,7 @@ $x=0;foreach((empty($_GET)?$maps:$_maps) as $map)
 		print("<a href='?user=".urlencode($mapmakers[$map[4]])."' class='text-danger'>{$map[4]}</span></td>");
 	}
 	else print("<span class='text-danger'>{$map[4]}</span></td>");
-	print("<td><a class='text-warning' data-toggle=\"modal\" data-target=\"#previewmap\" onclick=\"setpreview('{$map[0]}','{$map[4]}','{$map[1]}')\" style=\"cursor:pointer\">{$map[0]}</a></td>");
+	print("<td><a class='text-warning' onclick=\"openpreview('{$map[0]}','{$map[4]}','{$map[1]}')\" style=\"cursor:pointer\">{$map[0]}</a></td>");
 	//print("<td><span style='display:none;'>$orated</span><a href=\"?rate={$map[0]}\" class='text-info'>$rating</a></td>");
 	print("<td>".floor(($c/$rk)*100)."%</td>");
 	print("<td><a href=\"./?user=".urlencode($ranker)."\">$ranker</a> <a href='?ranks={$map[0]}' class='text-success'>(See all ranks)</a></td>");

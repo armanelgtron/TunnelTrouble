@@ -69,19 +69,21 @@
 ?>
 
 <!-- Map preview dialog -->
-	<div id="previewmap" class="modal fade" role="dialog">
+	<div id="previewmap" class="modal fade grey darken-4" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title" id="pMapTitle"></h4>
+					<span class="modal-title" id="pMapTitle"></span>
 				</div>
 				<div class="modal-content" id="pMapContent">
 					<p>Error!</p>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer grey darken-4">
+					<!--
 					<label class="checkbox-inline"><input type="checkbox" class="filled-in" id="gridcheck" onchange="previewgrid(this.checked)"/><span>Show Grid</span></label>
-					<a id="viewsrc" href="https://www.armanelgtron.tk/armagetronad/resource/" target="_blank" class="btn btn-info">View source</a><button type="button" class="btn btn-primary modal-close" data-dismiss="modal">Close</button>
+					-->
+					<a id="viewsrc" href="https://www.armanelgtron.tk/armagetronad/resource/" target="_blank" class="btn btn-info">View source</a>
+					<button type="button" class="btn btn-primary modal-close" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
