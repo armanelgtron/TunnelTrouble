@@ -94,14 +94,20 @@ foreach($file as $map => $stats)
 		</thead>
 		<tbody>
 <?php
-$file = getMapRankPath($_GET["ranks"]);
-$ranks = explode("\n",file_get_contents($file));
-$x=0;foreach($ranks as $rank) if($rank != "")
+$stats = StatsReader::fromMap($_GET["ranks"]);
+
+$r = $stats;
+while( $stats->next() )
 {
-	$x++;
-	$split = explode(" ",$rank);
-	if($split[1] == -1) continue;
-	echo "\t\t\t<tr class='arank'>\n\t\t\t\t<td>$x</td> <td><a href=\"./?user=".urlencode($split[0])."\">".htmlspecialchars($split[0])."</a></td> <td>".htmlspecialchars($split[1])."</td> <td>".htmlspecialchars($split[2])."</td>\n\t\t\t</tr>\n"; 
+	if( $r->hasFinished() )
+	{
+		print("\t\t\t<tr class='arank'>\n");
+		print("\t\t\t\t<td>".$r->getRank()."</td> ");
+		print("<td><a href=\"./?user=".urlencode($r->getPlayer())."\">".htmlspecialchars($r->getPlayer())."</a></td> ");
+		print("<td>".htmlspecialchars($r->getTime())."</td> ");
+		print("<td>".htmlspecialchars($r->getTimesFinished())."</td> ");
+		print("</tr>");
+	}
 }
 	echo "\t\t\t<tr id='notrank' style='display:none'>\n\t\t\t\t<td></td> <td>No matches found</td> <td></td> <td></td>\n\t\t\t</tr>\n"; 
 ?>

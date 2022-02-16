@@ -21,6 +21,7 @@ require_once("src/standard.php");
 
 require_once("src/include.php");
 
+require_once("src/StatsReader.php");
 require_once("src/PlayerStats.php");
 require_once("src/ladder.php");
 require_once("src/map.php");

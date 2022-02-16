@@ -6,29 +6,31 @@ function getLadder($beta=false)
 	foreach($rankfiles as $file)
 	{
 		$mapname = basename($file, ".aamap.xml.txt");
-		$maprnk = file_get_contents($file);
-		$ranks = explode("\n",$maprnk);
-		$x=0;foreach($ranks as $rank)
+		$stats = new StatsReader($file);
+		
+		$x = 0;
+		
+		$r = $stats;
+		while( $stats->next() )
 		{
-			if($rank == "") continue;
-			$split = explode(" ",$rank);
-			if( $split[1] != -1 )
+			if( $r->hasFinished() )
 			{
-				$x++;
+				$player = $r->getPlayer();
+				$x = $stats->get();
 				
-				if(!isset($played[$split[0]])) $played[$split[0]] = 0;
-				$played[$split[0]]++;
+				if(!isset($played[$player])) $played[$player] = 0;
+				$played[$player]++;
 				
-				$name[$split[0]] = $split[0]; // ????
+				$name[$player] = $player; // ????
 				
-				if(!isset($ranker[$split[0]])) $ranker[$split[0]] = 0;
-				$ranker[$split[0]] += $x;
+				if(!isset($ranker[$player])) $ranker[$player] = 0;
+				$ranker[$player] += $x;
 				
-				if(!isset($rankon[$split[0]])) $rankon[$split[0]] = [];
-				$rankon[$split[0]][$mapname] = $x;
+				if(!isset($rankon[$player])) $rankon[$player] = [];
+				$rankon[$player][$mapname] = $x;
 				
-				if(!isset($mapsplayed[$split[0]])) $mapsplayed[$split[0]] = [];
-				$mapsplayed[$split[0]][] = $mapname;
+				if(!isset($mapsplayed[$player])) $mapsplayed[$player] = [];
+				$mapsplayed[$player][] = $mapname;
 			}
 		}
 		

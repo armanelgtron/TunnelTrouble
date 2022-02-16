@@ -41,33 +41,36 @@ class PlayerStats
 		$x=0;$rankerdiv=0;foreach($rankfiles as $file)
 		{
 			$map = basename($file, ".aamap.xml.txt");
-			$maprnk = file_get_contents($file);
-			$ranks = explode("\n",$maprnk);
+			$stats = new StatsReader($file);
+			$r = $stats;
 			foreach($toGet as $s)
 			{
-				$rankerdiv+=$x;$x=0;foreach($ranks as $rank)
+				while( $stats->next() )
 				{
-					if( $rank == "" ) continue;
-					$split = explode(" ",$rank);
-					if( $split[1] == -1 ) continue;
-					$x++;
-					if(@$split[0] == $s->name)
+					if( $r->hasFinished() && $r->getUser() == $s->name )
 					{
+						$x = $r->getRank();
+						
+						// rank info
 						if($x <= 10) $s->topten++;
 						if($x <= 3) $s->topthree++;
 						if($x == 1) $s->top1++;
 						if($x == 2) $s->top2++;
 						if($x == 3) $s->top3++;
+						
 						$s->played++;
-						//$name = $split[0];
+						
 						$s->ranker += $x;
 						$s->rec[$map] = $x-1;
+						
 						if(isset($s->ranks[$x])) $s->ranks[$x] += 1;
 						else $s->ranks[$x] = 1;
 					}
 				}
 				if(!isset($s->rec[$map])) {$s->notraced[] = $map; $s->notranks += $x;}
+				$stats->set(0); // rewind to beginning
 			}
+			unset($stats, $r);
 		}
 		foreach($toGet as $s)
 		{

@@ -83,9 +83,26 @@ $x=0;foreach((empty($_GET)?$maps:$_maps) as $map)
 		$rating = "Rate this map";
 		$rated = $orated = 0;
 	}
-	$ranks = explode("\n",file_get_contents(getMapRankPath($map[0])));
-	$rk = $c = 0; foreach($ranks as $r) { if($r=="") continue; if( (explode(" ",$r))[1] != -1 ) { ++$c; } ++$rk; }
-	$ranker = ($c==0)?(""):(explode(" ",($ranks[0]))[0]);
+	
+	$stats = StatsReader::fromMap($map[0]);
+	
+	$r = $stats;
+	$ranker = "";
+	
+	$c = $rk = 0;
+	while( $stats->next() )
+	{
+		if( $r->hasFinished() )
+		{
+			if(!$ranker)
+			{
+				$ranker = $r->getPlayer();
+			}
+			++$c;
+		}
+		++$rk;
+	}
+	
 	echo "\n\t\t\t\t\t\t<td>$x</td> <td>$ta</td> <td>";
 	
 	if(isset($mapmakers[$map[4]]))

@@ -62,7 +62,7 @@ $myranks = $p->ranks;
 if($p->played)
 {
 $e = "";
-echo '<div class="container" role="main">';
+echo '<div class="container-alt" role="main">';
 echo "<h3>{$name}{$e}</h3>";
 echo "<b># of maps with 1st place:</b> $top1<br>";
 foreach(getLadder() as $ldpos=>$ld)
@@ -87,21 +87,35 @@ foreach($playerrec as $map=>$rec)
 (function($map, $rec) use($rankfiles) {
 	global $_maps;
 	$data = $_maps[array_search($map,array_column($_maps,0))];
-	echo '<div class="col s12 m6 ranks" name="rank_'.($rec+1).'"><div class="panel panel-default" style="display:inline"><div class="panel-heading">'." <a class='modal-trigger' data-toggle=\"modal\" data-target=\"previewmap\" onclick=\"setpreview('{$data[0]}','{$data[4]}','{$data[1]}')\" style=\"cursor:pointer\">{$map}</a> <a href='?ranks={$map}' class='text-success'>(See all ranks)</a></div><table class=\"table table-bordered\"><thead><tr><th>#</th> <th>User</th> <th>Time</th> <th>Average Speed</th></tr></thead><tbody>";
-	$file = getMapRankPath($map);
-	$themap = explode("\n",file_get_contents($file));
-	$x=-2;while($x<1||($rec==0&&$x<2)) 
+	print('<div class="col s12 m6 ranks" name="rank_'.($rec+1).'">');
+	print('<div class="panel panel-default" style="display:inline"><div class="panel-heading"> ');
+	print(	"<a onclick=\"openpreview('{$data[0]}','{$data[4]}','{$data[1]}')\" style=\"cursor:pointer\">{$map}</a> ");
+	print(	"<a href='?ranks={$map}' class='text-success'>(See all ranks)</a>");
+	print("</div>");
+	
+	print("<table class=\"table table-bordered\"><thead><tr><th>#</th> <th>User</th> <th>Time</th> <th>Finished</th></tr></thead><tbody>");
+	
+	$start = max(1, $rec-1);
+	$end = $start+3;
+	
+	$stats = StatsReader::fromMap($map);
+	$stats->set($start);
+	
+	$r = $stats;
+	while( $stats->next() && $stats->get() < $end )
 	{
-		$x++;
-		if($x != -1 || $rec != 0)
+		if( $r->hasFinished() )
 		{
-			$split = explode(" ",$themap[$rec+$x]);
-			echo "<tr";
-			if($x == 0) echo " class=\"active\"";
-			echo "><td>".(($rec+$x)+1)."</td> <td>".htmlspecialchars($split[1])."</td> <td>".htmlspecialchars($split[0])."</td> <td>".htmlspecialchars($split[3])."</td></tr>"; 
+			print("<tr ".( ( $r->get() == $rec ) ? 'class="active"' : "" )." >");
+			print("<td>".$r->getRank()."</td>");
+			print("<td><a href=\"./?user=".urlencode($r->getPlayer())."\">".htmlspecialchars($r->getPlayer())."</a></td>");
+			print("<td>".htmlspecialchars($r->getTime())."</td>");
+			print("<td>".htmlspecialchars($r->getTimesFinished())."</td>");
+			print("</tr>");
 		}
 	}
-})($map, $rec);
+
+})($map, $rec+1);
 echo '</tbody></table></div><br/><br/></div>';
 }
 echo '</div>'."<div style='margin:1%'><b>Maps not finished:</b> ";
