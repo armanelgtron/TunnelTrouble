@@ -2,8 +2,12 @@
 
 <div class="container-alt" role="main">
 <?php if(empty($_GET["ranks"])) { ?>
+	<style>
+		.collection a.collection-item                    { background-color: #37474f; color: white }
+		.collection a.collection-item:not(.active):hover { background-color: #546e7a; color: white }
+	</style>
 	<p>Select a map below:</p>
-	<ul class="collection white z-depth-3 links-kludge" style="border:none;padding-right:0">
+	<ul class="collection z-depth-3 links-kludge" style="border:none;padding-right:0">
 <?php
 $mapss = array();
 foreach($maps as $map)
