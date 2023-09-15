@@ -87,7 +87,7 @@ foreach($playerrec as $map=>$rec)
 (function($map, $rec) use($rankfiles) {
 	global $_maps;
 	$data = $_maps[array_search($map,array_column($_maps,0))];
-	print('<div class="col s12 m6 ranks" name="rank_'.($rec+1).'">');
+	print('<div class="col s12 m6 ranks" name="rank_'.($rec).'">');
 	print('<div class="panel panel-default" style="display:inline"><div class="panel-heading"> ');
 	print(	"<a onclick=\"openpreview('{$data[0]}','{$data[4]}','{$data[1]}')\" style=\"cursor:pointer\">{$map}</a> ");
 	print(	"<a href='?ranks={$map}' class='text-success'>(See all ranks)</a>");
